@@ -1,34 +1,40 @@
+/* Fonte global e fundo escuro */
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #e3eafc, #fdfdff);
+    font-family: 'Libre Baskerville', serif;
+    background: #0e0e0e;
+    color: #f3f4f6;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
   }
   
   .container {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    padding: 2.5rem 2rem;
+    background: rgba(24, 24, 27, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 18px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.06);
+    padding: 2.5rem 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     max-width: 800px;
-    width: 100%;
+    width: 90%;
     text-align: center;
-    border: 1px solid rgba(0,0,0,0.05);
+    z-index: 2;
+  }
+  
+  h1, h2, h3, p {
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.4px;
   }
   
   h1 {
     font-size: 2.4rem;
-    color: #1f2937;
     margin-bottom: 0.8rem;
   }
   p {
     font-size: 1rem;
-    color: #374151;
     margin-bottom: 2rem;
   }
   
@@ -85,9 +91,11 @@ body {
     z-index: 1000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
+  
   .custom-dropdown.open .dropdown-list {
     display: block;
   }
+  
   .custom-dropdown .dropdown-list li {
     padding: 0.6rem 1rem;
     display: flex;
@@ -97,6 +105,7 @@ body {
     cursor: pointer;
     font-size: 0.95rem;
   }
+  
   .custom-dropdown .dropdown-list li:hover {
     background-color: #f0f0f0;
   }
@@ -120,6 +129,7 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease, background 0.3s;
   }
+  
   #swap:hover {
     transform: rotate(180deg);
     background-color: #f3f4f6;
@@ -137,6 +147,7 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  
   #convert-btn:hover {
     background: linear-gradient(to right, #059669, #047857);
   }
@@ -144,13 +155,13 @@ body {
   .result-display {
     font-size: 1.2rem;
     margin-top: 1.4rem;
-    color: #111827;
+    color: #ffffff;
   }
   
   .rate-info {
     font-size: 0.95rem;
     margin-top: 0.4rem;
-    color: #6b7280;
+    color: #93c5fd;
   }
   
   footer {
@@ -158,39 +169,115 @@ body {
     font-size: 0.85rem;
     color: #9ca3af;
   }
-
+  
   .nav-bar {
-    width: 100%;
-    background-color: #fff;
-    border-bottom: 1px solid #e5e7eb;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 1rem 0;
+    background: rgba(24, 24, 27, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
+  
   .nav-menu {
     display: flex;
     justify-content: center;
     gap: 2rem;
     list-style: none;
   }
+  
   .nav-link {
     text-decoration: none;
     font-weight: 500;
-    color: #4b5563;
+    color: #e5e7eb;
     transition: color 0.3s;
   }
+  
   .nav-link:hover,
   .nav-link.active {
-    color: #111827;
+    color: #10b981;
     border-bottom: 2px solid #10b981;
     padding-bottom: 4px;
   }
+  
   .page.hidden {
     display: none;
   }
+  
   .page.active {
     display: block;
   }
+  
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .spline-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: auto;
+    overflow: hidden;
+  }
+  
+  .spline-bg iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  main, header, #overlay {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .text-glass {
+    color: #ffffff;
+    text-shadow:
+      0 1px 2px rgba(255, 255, 255, 0.3),
+      0 0 12px rgba(255, 255, 255, 0.2),
+      0 0 24px rgba(0, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+  }
+  
+  .text-glass-reflect {
+    color: #ffffff;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.3), 0 0 4px rgba(255,255,255,0.15);
+  }
+  
+  .text-glass-reflect::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(255,255,255,0.15);
+    transform: scaleY(-1);
+    filter: blur(3px);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  
+  
+  
+  
+  
+  
+
+  
   
   
