@@ -1,77 +1,64 @@
-
 const fromCurrency = document.getElementById('from-currency');
 const toCurrency = document.getElementById('to-currency');
-const amount = document.getElementById('amount');
+const amountInput = document.getElementById('amount');
 const convertBtn = document.getElementById('convert-btn');
 const resultDiv = document.getElementById('result');
 const swapBtn = document.getElementById('swap');
 
-const API_URL = 'https://api.exchangerate.host/latest';
+const API_BASE = 'https://api.frankfurter.app';
 
-async function fetchCurrencies() {
-  try {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-    console.log("Resposta da API:", data); // debug
+// Lista fixa de moedas suportadas pela Frankfurter
+const currencies = ["EUR", "USD", "GBP", "BRL", "JPY", "AUD", "CAD", "CHF", "CNY", "SEK"];
 
-    if (!data.rates) {
-      resultDiv.innerText = "Erro ao carregar moedas.";
-      return;
-    }
+function loadCurrencies() {
+  currencies.forEach(currency => {
+    fromCurrency.appendChild(new Option(currency, currency));
+    toCurrency.appendChild(new Option(currency, currency));
+  });
 
-    const currencies = Object.keys(data.rates);
+  fromCurrency.value = 'EUR';
+  toCurrency.value = 'USD';
 
-    currencies.forEach(currency => {
-      const option1 = new Option(currency, currency);
-      const option2 = new Option(currency, currency);
-      fromCurrency.appendChild(option1);
-      toCurrency.appendChild(option2);
-    });
-
-    fromCurrency.value = 'EUR';
-    toCurrency.value = 'USD';
-
-    convert();
-  } catch (err) {
-    console.error("Erro ao buscar moedas:", err);
-    resultDiv.innerText = "Erro de conexão com a API.";
-  }
+  convert();
 }
 
 async function convert() {
   const from = fromCurrency.value;
   const to = toCurrency.value;
-  const amt = parseFloat(amount.value);
+  const amt = parseFloat(amountInput.value);
 
   if (isNaN(amt) || amt <= 0) {
-    resultDiv.innerText = "Insere um valor válido.";
+    resultDiv.innerText = 'Insere um valor válido.';
+    return;
+  }
+
+  if (from === to) {
+    resultDiv.innerText = `${amt} ${from} = ${amt} ${to}`;
     return;
   }
 
   try {
-    const res = await fetch(`${API_URL}?base=${from}&symbols=${to}`);
+    const res = await fetch(`${API_BASE}/latest?amount=${amt}&from=${from}&to=${to}`);
     const data = await res.json();
-    const rate = data.rates[to];
-    const converted = (amt * rate).toFixed(2);
-
+    const converted = data.rates[to];
     resultDiv.innerText = `${amt} ${from} = ${converted} ${to}`;
-  } catch (err) {
-    console.error("Erro ao converter:", err);
-    resultDiv.innerText = "Erro ao converter moedas.";
+  } catch (error) {
+    console.error('Erro na conversão:', error);
+    resultDiv.innerText = 'Erro ao converter moedas.';
   }
 }
 
-[fromCurrency, toCurrency, amount].forEach(el =>
+[fromCurrency, toCurrency, amountInput].forEach(el =>
   el.addEventListener('input', convert)
 );
 
 convertBtn.addEventListener('click', convert);
 
 swapBtn.addEventListener('click', () => {
-  const temp = fromCurrency.value;
-  fromCurrency.value = toCurrency.value;
-  toCurrency.value = temp;
+  [fromCurrency.value, toCurrency.value] = [toCurrency.value, fromCurrency.value];
   convert();
 });
 
-fetchCurrencies();
+// Iniciar
+loadCurrencies();
+
