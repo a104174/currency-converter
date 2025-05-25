@@ -7,7 +7,7 @@ const swapBtn = document.getElementById('swap');
 
 const API_BASE = 'https://api.frankfurter.app';
 
-// Lista fixa de moedas suportadas pela Frankfurter
+// Lista fixa de moedas suportadas
 const currencies = ["EUR", "USD", "GBP", "BRL", "JPY", "AUD", "CAD", "CHF", "CNY", "SEK"];
 
 function loadCurrencies() {
