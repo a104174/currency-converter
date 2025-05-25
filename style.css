@@ -2,15 +2,12 @@ body {
   font-family: 'Libre Baskerville', serif;
   background: #0e0e0e;
   color: #f3f4f6;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .container {
+  margin: 4rem auto 2rem;
   background: rgba(24, 24, 27, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 22px;
@@ -333,6 +330,50 @@ main, header, #overlay {
     transform: translateY(0);
   }
 }
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.hero-title {
+  font-size: 4rem;
+  color: #10b981;
+  margin: 0;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  color: #f3f4f6;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+.scroll-down {
+  margin-top: 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 1s;
+}
+.scroll-down span {
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+
 
 
 

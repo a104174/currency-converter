@@ -178,6 +178,12 @@ document.querySelectorAll('.nav-link').forEach(link => {
   document.getElementById('convert-btn').addEventListener('click', () => {
     updateConversion();
   });
+
+  function scrollToConverter() {
+    document.getElementById('page-converter')
+      .scrollIntoView({ behavior: 'smooth' });
+  }
+  
   
   
   
