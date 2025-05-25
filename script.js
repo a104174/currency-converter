@@ -111,3 +111,48 @@ swapBtn.addEventListener('click', () => {
 
 updateConversion();
 
+// Navegação entre páginas
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = e.target.dataset.page;
+  
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+  
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.add('hidden');
+        page.classList.remove('active');
+      });
+      document.getElementById(`page-${target}`).classList.remove('hidden');
+      document.getElementById(`page-${target}`).classList.add('active');
+    });
+  });
+  
+  // Guardar histórico localStorage
+  function saveHistory(entry) {
+    const history = JSON.parse(localStorage.getItem('currency-history')) || [];
+    history.unshift(entry);
+    localStorage.setItem('currency-history', JSON.stringify(history));
+    renderHistory();
+  }
+  function renderHistory() {
+    const historyList = document.getElementById('history-list');
+    const history = JSON.parse(localStorage.getItem('currency-history')) || [];
+    historyList.innerHTML = history.map(item => `<li>${item}</li>`).join('');
+  }
+  
+  // Chama isto quando fizeres uma conversão
+  function updateConversionAndSave() {
+    const amount = parseFloat(amountInput.value);
+    if (isNaN(amount) || amount <= 0) return;
+    fetch(`${API}/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`)
+      .then(res => res.json())
+      .then(data => {
+        const rate = data.rates[toCurrency];
+        resultDisplay.textContent = `${amount} ${fromCurrency} = ${rate} ${toCurrency}`;
+        rateInfo.textContent = `1 ${fromCurrency} = ${(rate / amount).toFixed(4)} ${toCurrency}`;
+        saveHistory(`${amount} ${fromCurrency} ➜ ${rate} ${toCurrency}`);
+      });
+  }
+  

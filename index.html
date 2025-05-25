@@ -8,33 +8,56 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="nav-bar">
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#" class="nav-link active" data-page="converter">Conversor</a></li>
+        <li><a href="#" class="nav-link" data-page="history">Histórico</a></li>
+        <li><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+        <li><a href="#" class="nav-link" data-page="faq">Ajuda</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <main class="container">
-    <h1>Conversor de Moedas</h1>
+    <!-- Página: Conversor -->
+    <section id="page-converter" class="page active">
+      <h1>Conversor de Moedas</h1>
+      <p>Bem-vindo ao nosso conversor de moedas em tempo real! Selecione a moeda de origem e destino, insira o valor e veja o resultado da conversão com base nas taxas mais recentes.</p>
 
-    <p>Bem-vindo ao nosso conversor de moedas em tempo real! Selecione a moeda de origem e destino, insira o valor e veja o resultado da conversão com base nas taxas mais recentes.</p>
+      <div class="dropdown-container">
+        <div id="from-dropdown" class="custom-dropdown"></div>
+        <input type="number" id="amount" value="1" min="0" step="any" />
+        <button id="swap" title="Trocar moedas">⇄</button>
+        <div id="to-dropdown" class="custom-dropdown"></div>
+      </div>
 
-    <section class="converter">
-        <div class="dropdown-container">
-          <div id="from-dropdown" class="custom-dropdown"></div>
-          <input type="number" id="amount" value="1" min="0" step="any" />
-          <button id="swap" title="Trocar moedas">⇄</button>
-          <div id="to-dropdown" class="custom-dropdown"></div>
-        </div>
-      
-        <button id="convert-btn">Converter</button>
-        <div id="result" class="result-display"></div>
-        <div id="rate-info" class="rate-info"></div>
-      </section>
-      
-
-    <section class="popular-rates">
+      <button id="convert-btn">Converter</button>
+      <div id="result" class="result-display"></div>
+      <div id="rate-info" class="rate-info"></div>
+      <hr>
       <h2>Taxas populares (EUR)</h2>
-      <ul id="popular-list"></ul>
+      <p class="popular-info">As taxas são fornecidas pela API Frankfurter. Última atualização em tempo real.</p>
     </section>
 
-    <footer>
-      <p>As taxas são fornecidas pela API Frankfurter. Última atualização em tempo real.</p>
-    </footer>
+    <!-- Página: Histórico -->
+    <section id="page-history" class="page hidden">
+      <h2>Histórico de Conversões</h2>
+      <ul id="history-list"></ul>
+    </section>
+
+    <!-- Página: Sobre -->
+    <section id="page-about" class="page hidden">
+      <h2>Sobre as Moedas</h2>
+      <p>Esta aplicação permite converter entre várias moedas com base em taxas reais do mercado, fornecidas pela API Frankfurter.</p>
+    </section>
+
+    <!-- Página: Ajuda / FAQ -->
+    <section id="page-faq" class="page hidden">
+      <h2>Perguntas Frequentes</h2>
+      <p><strong>Como funciona a conversão?</strong><br>Seleciona duas moedas e insere um valor. A taxa é obtida em tempo real.</p>
+      <p><strong>Que moedas estão disponíveis?</strong><br>As principais moedas internacionais: EUR, USD, GBP, JPY, BRL, etc.</p>
+    </section>
   </main>
 
   <script src="script.js"></script>
