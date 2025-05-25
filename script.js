@@ -183,6 +183,17 @@ document.querySelectorAll('.nav-link').forEach(link => {
     document.getElementById('page-converter')
       .scrollIntoView({ behavior: 'smooth' });
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    new Typed("#typed-text", {
+      strings: ["Xcoin", "A sua moeda, o seu futuro", "Conversões em tempo real"],
+      typeSpeed: 60,
+      backSpeed: 40,
+      backDelay: 1500,
+      loop: true
+    });
+  });
+  
   
   
   
