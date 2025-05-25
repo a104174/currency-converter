@@ -11,11 +11,11 @@
     <h1>Conversor de Moedas</h1>
 
     <div class="converter">
-      <input type="number" id="amount" placeholder="Valor" value="1" />
+      <input type="number" id="amount" placeholder="Valor" value="1" min="0" step="any" />
 
       <div class="selectors">
         <select id="from-currency"></select>
-        <span>→</span>
+        <button id="swap">↔</button>
         <select id="to-currency"></select>
       </div>
 

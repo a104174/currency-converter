@@ -1,8 +1,10 @@
+
 const fromCurrency = document.getElementById('from-currency');
 const toCurrency = document.getElementById('to-currency');
 const amount = document.getElementById('amount');
 const convertBtn = document.getElementById('convert-btn');
 const resultDiv = document.getElementById('result');
+const swapBtn = document.getElementById('swap');
 
 const API_URL = 'https://api.exchangerate.host/latest';
 
@@ -20,12 +22,19 @@ async function fetchCurrencies() {
 
   fromCurrency.value = 'EUR';
   toCurrency.value = 'USD';
+
+  convert();
 }
 
 async function convert() {
   const from = fromCurrency.value;
   const to = toCurrency.value;
-  const amt = amount.value;
+  const amt = parseFloat(amount.value);
+
+  if (isNaN(amt) || amt <= 0) {
+    resultDiv.innerText = "Insere um valor válido.";
+    return;
+  }
 
   const res = await fetch(`${API_URL}?base=${from}&symbols=${to}`);
   const data = await res.json();
@@ -35,6 +44,17 @@ async function convert() {
   resultDiv.innerText = `${amt} ${from} = ${converted} ${to}`;
 }
 
+[fromCurrency, toCurrency, amount].forEach(el =>
+  el.addEventListener('input', convert)
+);
+
 convertBtn.addEventListener('click', convert);
+
+swapBtn.addEventListener('click', () => {
+  const temp = fromCurrency.value;
+  fromCurrency.value = toCurrency.value;
+  toCurrency.value = temp;
+  convert();
+});
 
 fetchCurrencies();
