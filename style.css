@@ -349,7 +349,8 @@ main, header, #overlay {
   color: #10b981;
   margin: 0;
   opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
+  animation: fadeInUp 1.2s ease-out forwards;
+  animation-delay: 1.2s;
 }
 .hero-subtitle {
   font-size: 1.5rem;
@@ -357,7 +358,7 @@ main, header, #overlay {
   color: #f3f4f6;
   opacity: 0;
   animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 0.5s;
+  animation-delay: 2s;
 }
 .scroll-down {
   margin-top: 2rem;
@@ -365,7 +366,7 @@ main, header, #overlay {
   cursor: pointer;
   opacity: 0;
   animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 1s;
+  animation-delay: 2.6s;
 }
 .scroll-down span {
   display: inline-block;
@@ -439,6 +440,33 @@ main, header, #overlay {
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
   font-family: 'Libre Baskerville', serif;
 }
+
+.spline-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.spline-wrapper.visible {
+  opacity: 1;
+}
+
+.converter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+
 
 
 

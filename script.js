@@ -196,6 +196,14 @@ document.querySelectorAll('.nav-link').forEach(link => {
       loop: true
     });
   });
+
+  window.addEventListener('load', () => {
+    const spline = document.querySelector('.spline-wrapper');
+    if (spline) {
+      spline.classList.add('visible');
+    }
+  });
+  
   
   
   
