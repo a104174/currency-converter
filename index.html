@@ -2,6 +2,8 @@
 <html lang="pt">
 <head>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>xCoin</title>
@@ -40,7 +42,7 @@
 
   <main class="container">
     <!-- Página: Conversor -->
-    <section id="page-converter" class="page active">
+    <section id="page-converter" class="page active" data-aos="zoom-in" data-aos-duration="800">
       <h1 class="fade-in text-glass-reflect" data-text="Conversor de Moedas" style="animation-delay: 0.1s;">Conversor de Moedas</h1>
 
       <p class="fade-in text-glass" style="animation-delay: 0.2s;">
@@ -85,6 +87,12 @@
   </main>
 
   <script src="script.js"></script>
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
 </body>
 </html>
 

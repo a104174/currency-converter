@@ -92,7 +92,10 @@ function updateConversion() {
       const rate = data.rates[toCurrency];
       resultDisplay.textContent = `${amount} ${fromCurrency} = ${rate} ${toCurrency}`;
       rateInfo.textContent = `1 ${fromCurrency} = ${(rate / amount).toFixed(4)} ${toCurrency}`;
-
+      
+      resultDisplay.style.display = 'block';
+      rateInfo.style.display = 'block';
+      
       resultDisplay.classList.add('fade-in-smooth');
       rateInfo.classList.add('fade-in-smooth');
 
