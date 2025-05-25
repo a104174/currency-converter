@@ -69,6 +69,8 @@ const amountInput = document.getElementById('amount');
 const resultDisplay = document.getElementById('result');
 const rateInfo = document.getElementById('rate-info');
 const swapBtn = document.getElementById('swap');
+let firstConversionDone = false;
+
 
 function updateConversion() {
   const amount = parseFloat(amountInput.value);
@@ -77,6 +79,7 @@ function updateConversion() {
     rateInfo.textContent = '';
     return;
   }
+
   if (fromCurrency === toCurrency) {
     resultDisplay.textContent = `${amount} ${fromCurrency} = ${amount} ${toCurrency}`;
     rateInfo.textContent = `1 ${fromCurrency} = 1 ${toCurrency}`;
@@ -89,6 +92,27 @@ function updateConversion() {
       const rate = data.rates[toCurrency];
       resultDisplay.textContent = `${amount} ${fromCurrency} = ${rate} ${toCurrency}`;
       rateInfo.textContent = `1 ${fromCurrency} = ${(rate / amount).toFixed(4)} ${toCurrency}`;
+
+      resultDisplay.classList.add('fade-in-smooth');
+      rateInfo.classList.add('fade-in-smooth');
+
+      if (!firstConversionDone) {
+        const convertBtn = document.getElementById('convert-btn');
+        convertBtn.classList.add('fade-out');
+        setTimeout(() => {
+          convertBtn.style.display = 'none';
+        }, 400);
+        firstConversionDone = true;
+
+        // Ativar eventos após a primeira conversão
+        amountInput.addEventListener('input', updateConversion);
+        swapBtn.addEventListener('click', () => {
+          [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
+          document.querySelector('#from-dropdown .selected').innerHTML = document.querySelector('#to-dropdown .selected').innerHTML;
+          document.querySelector('#to-dropdown .selected').innerHTML = `<img src="${flagURL(currencies.find(c => c.code === fromCurrency).flag)}" width="24" height="18"> ${fromCurrency}`;
+          updateConversion();
+        });
+      }
     }).catch(err => {
       resultDisplay.textContent = '';
       rateInfo.textContent = 'Erro ao obter taxa.';
@@ -96,25 +120,15 @@ function updateConversion() {
     });
 }
 
+
 createDropdown('from-dropdown', 'EUR', code => {
   fromCurrency = code;
-  updateConversion();
+  if (firstConversionDone) updateConversion();
 });
 createDropdown('to-dropdown', 'USD', code => {
   toCurrency = code;
-  updateConversion();
+  if (firstConversionDone) updateConversion();
 });
-
-amountInput.addEventListener('input', updateConversion);
-
-swapBtn.addEventListener('click', () => {
-  [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
-  document.querySelector('#from-dropdown .selected').innerHTML = document.querySelector('#to-dropdown .selected').innerHTML;
-  document.querySelector('#to-dropdown .selected').innerHTML = `<img src="${flagURL(currencies.find(c => c.code === fromCurrency).flag)}" width="24" height="18"> ${fromCurrency}`;
-  updateConversion();
-});
-
-updateConversion();
 
 // Navegação entre páginas
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -160,4 +174,10 @@ document.querySelectorAll('.nav-link').forEach(link => {
         saveHistory(`${amount} ${fromCurrency} ➜ ${rate} ${toCurrency}`);
       });
   }
+
+  document.getElementById('convert-btn').addEventListener('click', () => {
+    updateConversion();
+  });
+  
+  
   

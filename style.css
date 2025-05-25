@@ -23,7 +23,6 @@ body {
   position: relative;
 }
 
-/* Estilo do menu em "botões" */
 .nav-bar {
   background: transparent;
   padding: 1rem;
@@ -46,6 +45,7 @@ body {
   border-radius: 12px;
   padding: 0.6rem 1.4rem;
   transition: all 0.3s ease;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .nav-link:hover,
@@ -53,11 +53,6 @@ body {
   color: #10b981;
   background: rgba(16, 185, 129, 0.2);
   box-shadow: 0 0 8px #10b98166;
-}
-
-h1, h2, h3, p {
-  font-family: 'Libre Baskerville', serif;
-  letter-spacing: 0.4px;
 }
 
 h1 {
@@ -93,9 +88,9 @@ hr {
 }
 
 .custom-dropdown .selected {
-  border: 2px solid #10b981; /* verde neon */
+  border: 2px solid #10b981;
   padding: 0.8rem 1rem;
-  background: rgba(31, 41, 55, 0.9); /* escuro translúcido */
+  background: rgba(31, 41, 55, 0.9);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -106,12 +101,13 @@ hr {
   color: #f9fafb;
   font-weight: 500;
   backdrop-filter: blur(6px);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); /* sombra verde suave */
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+  font-family: 'Libre Baskerville', serif;
 }
 
 .custom-dropdown .selected:hover {
-  background: rgba(30, 64, 55, 0.9); /* verde escuro suave */
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); /* sombra mais intensa */
+  background: rgba(30, 64, 55, 0.9);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
   transform: scale(1.03);
 }
 
@@ -120,7 +116,7 @@ hr {
   top: 110%;
   left: 0;
   right: 0;
-  background: rgba(31, 41, 55, 0.9); /* fundo escuro translúcido */
+  background: rgba(31, 41, 55, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   max-height: 240px;
@@ -145,10 +141,12 @@ hr {
   color: #f3f4f6;
   transition: all 0.3s ease;
   border-radius: 10px;
+  position: relative;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .custom-dropdown .dropdown-list li:hover {
-  background: rgba(16, 185, 129, 0.2); /* fundo hover verde translúcido */
+  background: rgba(16, 185, 129, 0.2);
   color: #10b981;
   transform: scale(1.03);
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
@@ -158,29 +156,43 @@ hr {
   width: 120px;
   padding: 0.85rem;
   border-radius: 10px;
-  border: 1px solid #cbd5e1;
+  border: 2px solid #cbd5e1;
   font-size: 1rem;
   text-align: center;
+  font-family: 'Libre Baskerville', serif;
+  background: rgba(31, 41, 55, 0.9);
+  color: #f3f4f6;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 }
 
 #swap {
-  background: linear-gradient(145deg, #e5e7eb, #fff);
-  border: 1px solid #cbd5e1;
+  background: rgba(31, 41, 55, 0.9); /* fundo igual ao input e dropdowns */
+  border: 2px solid #10b981;         /* mesma borda neon */
   width: 44px;
   height: 44px;
   border-radius: 50%;
   font-size: 1.3rem;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s;
+  transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
+  color: #f3f4f6;
+  font-family: 'Libre Baskerville', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 }
+
 
 #swap:hover {
   transform: rotate(180deg);
-  background-color: #f3f4f6;
+  background-color: rgba(30, 64, 55, 0.9); /* tom de verde escuro suave */
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
 }
 
+
 #convert-btn {
-  margin-top: 1.2rem;
+  display: inline-block;
+  margin: 1.2rem auto 0;
   padding: 0.9rem 2.2rem;
   font-size: 1rem;
   border: none;
@@ -189,8 +201,11 @@ hr {
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  font-family: 'Libre Baskerville', serif;
+  text-align: center;
 }
+
 
 #convert-btn:hover {
   background: linear-gradient(to right, #059669, #047857);
@@ -207,6 +222,7 @@ hr {
   border-radius: 12px;
   display: inline-block;
   max-width: 90%;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .page.hidden {
@@ -247,17 +263,12 @@ main, header, #overlay {
   z-index: 2;
 }
 
-/* Remover fundos desnecessários */
 .text-glass,
 .text-glass-reflect::after {
   background: none !important;
   text-shadow: none !important;
   backdrop-filter: none !important;
   color: inherit;
-}
-
-.custom-dropdown .dropdown-list li {
-  position: relative;
 }
 
 .custom-dropdown .dropdown-list li::after {
@@ -273,7 +284,6 @@ main, header, #overlay {
   opacity: 1;
 }
 
-/* Animação ripple leve */
 .custom-dropdown .dropdown-list li.selected-option {
   animation: popSelect 0.3s ease-in-out;
 }
@@ -289,6 +299,43 @@ main, header, #overlay {
     transform: scale(1);
   }
 }
+
+/* Remove as setinhas do input number - Chrome, Safari, Edge */
+#amount::-webkit-outer-spin-button,
+#amount::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#amount[type=number] {
+  -moz-appearance: textfield;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+
+/* Fade suave para mostrar */
+.fade-in-smooth {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInSmooth 0.5s ease forwards;
+}
+
+@keyframes fadeInSmooth {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
 
 
   
