@@ -148,6 +148,9 @@ document.querySelectorAll('.nav-link').forEach(link => {
       });
       document.getElementById(`page-${target}`).classList.remove('hidden');
       document.getElementById(`page-${target}`).classList.add('active');
+      if (target === 'history') {
+        renderHistory(); // mostrar os dados do localStorage
+      }      
     });
   });
   
@@ -167,20 +170,48 @@ document.querySelectorAll('.nav-link').forEach(link => {
   // Chama isto quando fizeres uma conversão
   function updateConversionAndSave() {
     const amount = parseFloat(amountInput.value);
-    if (isNaN(amount) || amount <= 0) return;
+    if (isNaN(amount) || amount <= 0) {
+      resultDisplay.textContent = '';
+      rateInfo.textContent = '';
+      return;
+    }
+  
+    if (fromCurrency === toCurrency) {
+      resultDisplay.textContent = `${amount} ${fromCurrency} = ${amount} ${toCurrency}`;
+      rateInfo.textContent = `1 ${fromCurrency} = 1 ${toCurrency}`;
+      resultDisplay.style.display = 'block';
+      rateInfo.style.display = 'block';
+      resultDisplay.classList.add('fade-in-smooth');
+      rateInfo.classList.add('fade-in-smooth');
+      saveHistory(`${amount} ${fromCurrency} ➜ ${amount} ${toCurrency}`);
+      return;
+    }
+  
     fetch(`${API}/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`)
       .then(res => res.json())
       .then(data => {
         const rate = data.rates[toCurrency];
         resultDisplay.textContent = `${amount} ${fromCurrency} = ${rate} ${toCurrency}`;
         rateInfo.textContent = `1 ${fromCurrency} = ${(rate / amount).toFixed(4)} ${toCurrency}`;
+  
+        resultDisplay.style.display = 'block';
+        rateInfo.style.display = 'block';
+  
+        resultDisplay.classList.add('fade-in-smooth');
+        rateInfo.classList.add('fade-in-smooth');
+  
         saveHistory(`${amount} ${fromCurrency} ➜ ${rate} ${toCurrency}`);
+      }).catch(err => {
+        resultDisplay.textContent = '';
+        rateInfo.textContent = 'Erro ao obter taxa.';
+        console.error(err);
       });
   }
+  
 
   document.getElementById('convert-btn').addEventListener('click', () => {
-    updateConversion();
-  });
+    updateConversionAndSave();
+  });  
 
   function scrollToConverter() {
     document.getElementById('page-converter')

@@ -163,8 +163,8 @@ hr {
 }
 
 #swap {
-  background: rgba(31, 41, 55, 0.9); /* fundo igual ao input e dropdowns */
-  border: 2px solid #10b981;         /* mesma borda neon */
+  background: rgba(31, 41, 55, 0.9); 
+  border: 2px solid #10b981;         
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -182,7 +182,7 @@ hr {
 
 #swap:hover {
   transform: rotate(180deg);
-  background-color: rgba(30, 64, 55, 0.9); /* tom de verde escuro suave */
+  background-color: rgba(30, 64, 55, 0.9); 
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
 }
 
@@ -299,14 +299,12 @@ main, header, #overlay {
   }
 }
 
-/* Remove as setinhas do input number - Chrome, Safari, Edge */
 #amount::-webkit-outer-spin-button,
 #amount::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Firefox */
 #amount[type=number] {
   -moz-appearance: textfield;
 }
@@ -319,7 +317,6 @@ main, header, #overlay {
 }
 
 
-/* Fade suave para mostrar */
 .fade-in-smooth {
   opacity: 0;
   transform: translateY(20px);
@@ -466,6 +463,117 @@ main, header, #overlay {
   text-align: center;
 }
 
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+}
+
+.about-card h3 {
+  color: #10b981;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.about-card p {
+  color: #d1d5db;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.history-list li {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  color: #e5e7eb;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease;
+}
+
+.history-list li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.faq-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.5rem;
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  text-align: left;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.15);
+}
+
+.faq-card h3 {
+  font-size: 1.1rem;
+  color: #10b981;
+  margin-bottom: 0.6rem;
+}
+
+.faq-card p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  line-height: 1.5;
+}
+
+.faq-card a {
+  color: #10b981;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.faq-card a:hover {
+  color: #34d399;
+}
 
 
 
