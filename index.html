@@ -4,27 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Conversor de Moedas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <h1>Conversor de Moedas</h1>
 
-    <div class="converter">
-      <input type="number" id="amount" placeholder="Valor" value="1" min="0" step="any" />
+    <p>Bem-vindo ao nosso conversor de moedas em tempo real! Selecione a moeda de origem e destino, insira o valor e veja o resultado da conversão com base nas taxas mais recentes.</p>
 
-      <div class="selectors">
-        <select id="from-currency"></select>
-        <button id="swap">↔</button>
-        <select id="to-currency"></select>
-      </div>
+    <section class="converter">
+        <div class="dropdown-container">
+          <div id="from-dropdown" class="custom-dropdown"></div>
+          <input type="number" id="amount" value="1" min="0" step="any" />
+          <button id="swap" title="Trocar moedas">⇄</button>
+          <div id="to-dropdown" class="custom-dropdown"></div>
+        </div>
+      
+        <button id="convert-btn">Converter</button>
+        <div id="result" class="result-display"></div>
+        <div id="rate-info" class="rate-info"></div>
+      </section>
+      
 
-      <button id="convert-btn">Converter</button>
+    <section class="popular-rates">
+      <h2>Taxas populares (EUR)</h2>
+      <ul id="popular-list"></ul>
+    </section>
 
-      <div id="result"></div>
-    </div>
-  </div>
+    <footer>
+      <p>As taxas são fornecidas pela API Frankfurter. Última atualização em tempo real.</p>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
 </html>
+
