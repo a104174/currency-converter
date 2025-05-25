@@ -32,11 +32,16 @@ function createDropdown(containerId, defaultCode, onSelect) {
     li.innerHTML = `<img src="${flagURL(c.flag)}" width="24" height="18"> ${c.code}`;
     li.dataset.code = c.code;
     li.addEventListener('click', () => {
+      // Atualiza visual
+      container.querySelectorAll('li').forEach(el => el.classList.remove('selected-option'));
+      li.classList.add('selected-option');
+    
+      // Atualiza texto no topo
       selected.innerHTML = `<img src="${flagURL(c.flag)}" width="24" height="18"> ${c.code}`;
       list.classList.remove('show');
       container.classList.remove('open');
       onSelect(c.code);
-    });
+    });   
     list.appendChild(li);
   });
 
