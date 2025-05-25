@@ -9,21 +9,33 @@ const swapBtn = document.getElementById('swap');
 const API_URL = 'https://api.exchangerate.host/latest';
 
 async function fetchCurrencies() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  const currencies = Object.keys(data.rates);
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    console.log("Resposta da API:", data); // debug
 
-  currencies.forEach(currency => {
-    const option1 = new Option(currency, currency);
-    const option2 = new Option(currency, currency);
-    fromCurrency.appendChild(option1);
-    toCurrency.appendChild(option2);
-  });
+    if (!data.rates) {
+      resultDiv.innerText = "Erro ao carregar moedas.";
+      return;
+    }
 
-  fromCurrency.value = 'EUR';
-  toCurrency.value = 'USD';
+    const currencies = Object.keys(data.rates);
 
-  convert();
+    currencies.forEach(currency => {
+      const option1 = new Option(currency, currency);
+      const option2 = new Option(currency, currency);
+      fromCurrency.appendChild(option1);
+      toCurrency.appendChild(option2);
+    });
+
+    fromCurrency.value = 'EUR';
+    toCurrency.value = 'USD';
+
+    convert();
+  } catch (err) {
+    console.error("Erro ao buscar moedas:", err);
+    resultDiv.innerText = "Erro de conexão com a API.";
+  }
 }
 
 async function convert() {
@@ -36,12 +48,17 @@ async function convert() {
     return;
   }
 
-  const res = await fetch(`${API_URL}?base=${from}&symbols=${to}`);
-  const data = await res.json();
-  const rate = data.rates[to];
-  const converted = (amt * rate).toFixed(2);
+  try {
+    const res = await fetch(`${API_URL}?base=${from}&symbols=${to}`);
+    const data = await res.json();
+    const rate = data.rates[to];
+    const converted = (amt * rate).toFixed(2);
 
-  resultDiv.innerText = `${amt} ${from} = ${converted} ${to}`;
+    resultDiv.innerText = `${amt} ${from} = ${converted} ${to}`;
+  } catch (err) {
+    console.error("Erro ao converter:", err);
+    resultDiv.innerText = "Erro ao converter moedas.";
+  }
 }
 
 [fromCurrency, toCurrency, amount].forEach(el =>
