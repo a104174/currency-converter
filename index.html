@@ -15,6 +15,20 @@
 </head>
 <body>
 
+  <header class="main-header">
+    <div class="wrapper">
+      <div class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        xCoin
+      </div>
+      <nav class="header-nav">
+        <a href="#converter-section" class="header-link">Converter</a>
+        <a href="#graph-section"     class="header-link">Gráficos</a>
+      </nav>
+    </div>
+  </header>
+  
+
+
   <!-- Camada de escurecimento (usado em dropdowns, etc.) -->
   <div id="overlay"></div>
 
@@ -24,10 +38,10 @@
       <iframe src="https://my.spline.design/coin-6wkcW6S5OD7QhIjrGAPN4njI/" frameborder="0" width="100%" height="100%" allowfullscreen></iframe>
     </div>
     <div class="hero-content"></div>
-    <h1 class="hero-title"><span id="typed-text"></span></h1>
-    <p class="hero-subtitle">O seu conversor de moedas em tempo real</p>
-    <div class="scroll-down" onclick="scrollToConverter()">
-      <span>↓</span>
+     <h1 class="hero-title"><span id="typed-text"></span></h1>
+     <p class="hero-subtitle">O seu conversor de moedas em tempo real</p>
+     <div class="scroll-down" onclick="scrollToConverter()">
+       <span>↓</span>
       </div>     
     </div>
   </section>
@@ -80,6 +94,7 @@
           <option value="365">1 ano</option>
         </select>
       </div>
+      <div id="graph-section"></div> 
       <!-- Gráfico de evolução -->
       <canvas id="evolution-chart" width="600" height="320"></canvas>
 
@@ -174,4 +189,5 @@
 
 </body>
 </html>
+
 
