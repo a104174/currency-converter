@@ -328,8 +328,22 @@ document.querySelectorAll('.nav-link').forEach(link => {
     }
   });
   
-  
-  
-  
-  
-  
+
+/* ---- marcar link activo consoante a secção visível ---- */
+const sections = [
+  { id:'converter-section', link:document.querySelector('[href="#converter-section"]') },
+  { id:'graph-section',     link:document.querySelector('[href="#graph-section"]') }
+];
+
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(ent=>{
+    const sec = sections.find(s => s.id === ent.target.id);
+    if(!sec) return;
+    if(ent.isIntersecting){
+      sections.forEach(s => s.link.classList.remove('active'));
+      sec.link.classList.add('active');
+    }
+  });
+}, { rootMargin:'-50% 0px -45% 0px' });   // activa a meio do viewport
+
+sections.forEach(s => obs.observe(document.getElementById(s.id)));
