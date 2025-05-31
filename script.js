@@ -19,48 +19,74 @@ function createDropdown(containerId, defaultCode, onSelect) {
   const container = document.getElementById(containerId);
   container.classList.add('custom-dropdown');
 
+  /* topo (moeda seleccionada) */
   const selected = document.createElement('div');
   selected.classList.add('selected');
   container.appendChild(selected);
 
+  /* lista */
   const list = document.createElement('ul');
   list.classList.add('dropdown-list');
   container.appendChild(list);
 
+  /* 🔍 campo de pesquisa */
+  const search = document.createElement('input');
+  search.type = 'text';
+  search.className = 'dropdown-search';
+  search.placeholder = 'Procurar moeda…';
+  list.appendChild(search);
+
+  /* gera itens */
   currencies.forEach(c => {
     const li = document.createElement('li');
     li.innerHTML = `<img src="${flagURL(c.flag)}" width="24" height="18"> ${c.code}`;
     li.dataset.code = c.code;
-    li.addEventListener('click', () => {
-      // Atualiza visual
-      container.querySelectorAll('li').forEach(el => el.classList.remove('selected-option'));
-      li.classList.add('selected-option');
-    
-      // Atualiza texto no topo
-      selected.innerHTML = `<img src="${flagURL(c.flag)}" width="24" height="18"> ${c.code}`;
-      list.classList.remove('show');
-      container.classList.remove('open');
-      onSelect(c.code);
-    });   
+    li.dataset.name = c.name.toLowerCase(); // para pesquisa
     list.appendChild(li);
   });
 
+  /* selecciona item */
+  const selectItem = (code) => {
+    container.querySelectorAll('li').forEach(el => el.classList.remove('selected-option'));
+    const li = [...container.querySelectorAll('li')].find(l => l.dataset.code === code);
+    if (li) li.classList.add('selected-option');
+
+    const { flag } = currencies.find(c => c.code === code);
+    selected.innerHTML = `<img src="${flagURL(flag)}" width="24" height="18"> ${code}`;
+    list.classList.remove('show');
+    container.classList.remove('open');
+    onSelect(code);
+  };
+
+  /* click em item */
+  list.addEventListener('click', e => {
+    const li = e.target.closest('li');
+    if (li && li.dataset.code) selectItem(li.dataset.code);
+  });
+
+  /* pesquisa dinâmica */
+  search.addEventListener('input', () => {
+    const q = search.value.toLowerCase();
+    container.querySelectorAll('li').forEach(li => {
+      li.style.display = (li.dataset.code.toLowerCase().includes(q) || li.dataset.name.includes(q)) ? '' : 'none';
+    });
+  });
+
+  /* abre/fecha dropdown */
   selected.addEventListener('click', () => {
     container.classList.toggle('open');
+    search.value = '';
+    search.dispatchEvent(new Event('input'));
+    if (container.classList.contains('open')) search.focus();
   });
-
-  // Set default
-  const c = currencies.find(x => x.code === defaultCode);
-  selected.innerHTML = `<img src="${flagURL(c.flag)}" width="24" height="18"> ${c.code}`;
-  onSelect(defaultCode);
-
-  // Close if click outside
   window.addEventListener('click', e => {
-    if (!container.contains(e.target)) {
-      container.classList.remove('open');
-    }
+    if (!container.contains(e.target)) container.classList.remove('open');
   });
+
+  /* estado inicial */
+  selectItem(defaultCode);
 }
+
 
 let fromCurrency = 'EUR';
 let toCurrency = 'USD';
@@ -69,7 +95,15 @@ const amountInput = document.getElementById('amount');
 const resultDisplay = document.getElementById('result');
 const rateInfo = document.getElementById('rate-info');
 const swapBtn = document.getElementById('swap');
+const periodSelect = document.getElementById('period');
+periodSelect.addEventListener('change', () => {
+  periodDays = parseInt(periodSelect.value, 10);
+  updateChart();
+});
 let firstConversionDone = false;
+let chart; // guarda a instância Chart.js
+let periodDays = 30;           // valor inicial = 30 dias
+
 
 
 function updateConversion() {
@@ -83,6 +117,7 @@ function updateConversion() {
   if (fromCurrency === toCurrency) {
     resultDisplay.textContent = `${amount} ${fromCurrency} = ${amount} ${toCurrency}`;
     rateInfo.textContent = `1 ${fromCurrency} = 1 ${toCurrency}`;
+    updateChart();
     return;
   }
 
@@ -98,6 +133,8 @@ function updateConversion() {
       
       resultDisplay.classList.add('fade-in-smooth');
       rateInfo.classList.add('fade-in-smooth');
+
+      updateChart();
 
       if (!firstConversionDone) {
         const convertBtn = document.getElementById('convert-btn');
@@ -167,6 +204,60 @@ document.querySelectorAll('.nav-link').forEach(link => {
     historyList.innerHTML = history.map(item => `<li>${item}</li>`).join('');
   }
   
+  function updateChart() {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - periodDays);
+  
+    const format = d => d.toISOString().split('T')[0];
+    const url = `${API}/${format(start)}..${format(end)}?from=${fromCurrency}&to=${toCurrency}`;
+  
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const labels = Object.keys(data.rates).sort();
+        const values = labels.map(date => data.rates[date][toCurrency]);
+  
+        // cria ou actualiza
+        if (!chart) {
+          const ctx = document.getElementById('evolution-chart').getContext('2d');
+          chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels,
+              datasets: [{
+                label: `${fromCurrency} → ${toCurrency}`,
+                data: values,
+                fill: false,
+                borderColor: '#10b981',
+                tension: 0.3,
+                pointRadius: 0
+              }]
+            },
+            options: {
+              responsive: true,
+              interaction: { mode: 'index', intersect: false },
+              plugins: {
+                legend: { labels: { color: '#f3f4f6' } },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.y.toFixed(4) } }
+              },
+              scales: {
+                x: { ticks: { color: '#cbd5e1' } },
+                y: { ticks: { color: '#cbd5e1' } }
+              }
+            }
+          });
+        } else {
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = values;
+          chart.data.datasets[0].label = `${fromCurrency} → ${toCurrency}`;
+          chart.update();
+        }
+      })
+      .catch(err => console.error('Erro no gráfico', err));
+  }
+
+  
   // Chama isto quando fizeres uma conversão
   function updateConversionAndSave() {
     const amount = parseFloat(amountInput.value);
@@ -184,6 +275,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
       resultDisplay.classList.add('fade-in-smooth');
       rateInfo.classList.add('fade-in-smooth');
       saveHistory(`${amount} ${fromCurrency} ➜ ${amount} ${toCurrency}`);
+      updateChart();
       return;
     }
   
@@ -201,6 +293,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
         rateInfo.classList.add('fade-in-smooth');
   
         saveHistory(`${amount} ${fromCurrency} ➜ ${rate} ${toCurrency}`);
+        updateChart(); 
       }).catch(err => {
         resultDisplay.textContent = '';
         rateInfo.textContent = 'Erro ao obter taxa.';

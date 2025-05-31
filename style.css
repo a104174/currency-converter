@@ -575,6 +575,138 @@ main, header, #overlay {
   color: #34d399;
 }
 
+/* Gráfico */
+#evolution-chart {
+  max-width: 640px;
+  width: 100%;
+  margin: 2.5rem auto 0;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.period-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: 1.6rem;
+  background: rgba(255,255,255,.03);
+  padding: .6rem 1rem;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+  font-family: 'Libre Baskerville', serif;
+}
+
+.period-selector label {
+  color: #d1d5db;
+  font-size: .95rem;
+}
+
+.period-selector select {
+  background: rgba(31,41,55,.9);
+  color: #f3f4f6;
+  border: 1px solid #10b981;
+  padding: .4rem .8rem;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.period-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(16,185,129,.4);
+}
+
+/* === Dropdown Pro v2 === */
+
+/* container e lista mantêm-se como tinhas */
+.custom-dropdown .dropdown-list {
+  /* bordas rectas e sombreamento suave */
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* barra de scroll (Firefox + WebKit) */
+.custom-dropdown .dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-dropdown .dropdown-list::-webkit-scrollbar-thumb {
+  background: #10b98188;
+  border-radius: 4px;
+}
+.custom-dropdown .dropdown-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* campo de pesquisa */
+.dropdown-search {
+  width: 90%;
+  margin: .6rem auto .4rem;
+  padding: .45rem .8rem;
+  border: 1px solid #10b981;
+  border-radius: 8px;
+  background: rgba(31,41,55,.9);
+  color: #f3f4f6;
+  font-size: .9rem;
+  font-family: 'Libre Baskerville', serif;
+}
+.dropdown-search::placeholder {
+  color: #94a3b8;
+}
+
+/* item da lista */
+.custom-dropdown .dropdown-list li {
+  padding: .55rem 1rem;
+  border-radius: 8px;
+  transition: background .25s, transform .25s;
+}
+.custom-dropdown .dropdown-list li:hover {
+  background: rgba(16,185,129,.12);
+  transform: translateX(4px);
+}
+
+/* seleccionado */
+.custom-dropdown .dropdown-list li.selected-option {
+  background: rgba(16,185,129,.25);
+  color: #10b981;
+}
+
+/* highlight (check) agora alinhado */
+.custom-dropdown .dropdown-list li::after {
+  right: 10px;
+  font-size: .95rem;
+}
+
+.site-footer-min {
+  margin: 2rem auto 1rem;
+  text-align: center;
+}
+.gh-min {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: 0.8rem;
+  font-family:'IBM Plex Mono', monospace;
+  color: #94a3b8;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.gh-min:hover {
+  opacity: 1;
+  color: #10b981;
+}
+.gh-min svg {
+  fill: currentColor;
+}
+
 
 
 
