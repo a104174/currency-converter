@@ -4,7 +4,7 @@ Um projeto simples e funcional de conversor de moedas desenvolvido em HTML, CSS 
 
 ## 🚀 Demonstração
 
-> (Adiciona aqui um link para o GitHub Pages ou imagem/gif do projeto, se aplicável)
+https://a104174.github.io/currency-converter/
 
 ## 🛠 Funcionalidades
 
